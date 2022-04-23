@@ -1,23 +1,16 @@
 <template lang='pug'>
   .base-calculator
-    .base-calculator__screen {{current || 0}}
-    .base-calculator__panel
-      .base-calculator__panel--button(@click='display(7)') 7
-      .base-calculator__panel--button(@click='display(8)') 8
-      .base-calculator__panel--button(@click='display(9)') 9
-      .base-calculator__panel--button /
-      .base-calculator__panel--button(@click='display(4)') 4
-      .base-calculator__panel--button(@click='display(5)') 5
-      .base-calculator__panel--button(@click='display(6)') 6
-      .base-calculator__panel--button x
-      .base-calculator__panel--button(@click='display(1)') 1
-      .base-calculator__panel--button(@click='display(2)') 2
-      .base-calculator__panel--button(@click='display(3)') 3
-      .base-calculator__panel--button -
-      .base-calculator__panel--button(@click='display(0)') 0
-      .base-calculator__panel--button .
-      .base-calculator__panel--button =
-      .base-calculator__panel--button +
+    .base-calculator__screen {{displayValue || 0}}
+    .base-calculator__button(v-for='value in [7, 8, 9]' @click='display(value)') {{value}}
+    .base-calculator__button(@click='operate("/")') /
+    .base-calculator__button(v-for='value in [4, 5, 6]' @click='display(value)') {{value}}
+    .base-calculator__button(@click='operate("*")') x
+    .base-calculator__button(v-for='value in [1, 2, 3]' @click='display(value)') {{value}}
+    .base-calculator__button(@click='operate("-")') -
+    .base-calculator__button(@click='display(0)') 0
+    .base-calculator__button(@click='decimal()') .
+    .base-calculator__button(@click='evaluate()') =
+    .base-calculator__button(@click='operate("+")') +
 </template>
 
 <script>
@@ -25,14 +18,32 @@ export default {
   name: 'BaseCalculator',
   data() {
     return {
-      input: [],
-      current: '',
-      evaluated: ''
+      inputValues: [],
+      displayValue: '',
+      errorMessage: 'ERROR'
     }
   },
   methods: {
     display(value) {
-      this.current = `${this.current + value}`
+      this.displayValue = `${this.displayValue}${value}`
+    },
+    decimal() {
+      if (this.displayValue.indexOf('.') === -1) {
+        this.display('.')
+      }
+    },
+    lastValue() {
+      const regEx = /[+\-*/]/
+      return this.displayValue.split(regEx).pop()
+    },
+    operate(operator) {
+      this.inputValues.push(this.lastValue(), operator)
+      this.display(operator)
+    },
+    evaluate() {
+      this.inputValues.push(this.lastValue())
+      const total = eval(this.inputValues.join(' '))
+      this.displayValue = total ? total.toString() : this.errorMessage
     }
   }
 }
@@ -41,24 +52,21 @@ export default {
 <style lang='stylus' scoped>
 .base-calculator
   width: 400px
+  display: grid
+  grid-template-columns: repeat(4, 1fr)
+  grid-template-rows: repeat(4, 100px)
 
   &__screen
+    grid-column: 1 / 5
+    padding: 40px 8px
     border: 1px solid grey
-    padding: 15px 8px
+    border-bottom: none
     text-align: right
 
-  &__panel
-    display: grid
-    justify-content: center
-    align-items: center
-    grid-template-columns: repeat(4, 100px)
-    grid-template-rows: repeat(4, 100px)
-
-    &--button
-      text-align: center
-      padding: 40px 0
-      border: 1px solid grey
-
-      &:hover
-        cursor: pointer
+  &__button
+    padding: 40px 0
+    margin: 0 -1px -1px 0
+    border: 1px solid grey
+    text-align: center
+    cursor: pointer
 </style>
