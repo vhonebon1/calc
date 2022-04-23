@@ -1,0 +1,15 @@
+_COLOURS = {
+  charcoal: #555555,
+  stone: #656565,
+  goldfish: #FF9F05,
+  ice: #EEEEEE
+}
+
+for colour in _COLOURS
+  .bg--
+    &{ colour }
+      background-color: _COLOURS[colour]
+
+  .text--
+    &{ colour }
+      color: _COLOURS[colour]
