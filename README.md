@@ -1,24 +1,15 @@
 # calculator
 
-## Project setup
+## Setup:
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+## To run:
 ```
 npm run serve
 ```
+Go to the localhost port shown in your terminal
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Notes:
+- Vue app with stylus & pug
