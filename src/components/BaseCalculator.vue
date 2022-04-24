@@ -3,20 +3,20 @@
     .base-calculator__screen.bg--charcoal {{displayValue || 0}}
     .base-calculator__button.bg--stone(
       v-for='value in [7, 8, 9]' 
-      @click='display(value)'
+      @click='recordValue(value)'
     ) {{value}}
     .base-calculator__button.bg--goldfish(@click='operate("/")') /
     .base-calculator__button.bg--stone(
       v-for='value in [4, 5, 6]' 
-      @click='display(value)'
+      @click='recordValue(value)'
     ) {{value}}
     .base-calculator__button.bg--goldfish(@click='operate("*")') x
     .base-calculator__button.bg--stone(
       v-for='value in [1, 2, 3]' 
-      @click='display(value)'
+      @click='recordValue(value)'
     ) {{value}}
     .base-calculator__button.bg--goldfish(@click='operate("-")') -
-    .base-calculator__button.bg--stone.br--bl(@click='display(0)') 0
+    .base-calculator__button.bg--stone.br--bl(@click='recordValue(0)') 0
     .base-calculator__button.bg--goldfish(@click='decimal()') .
     .base-calculator__button.bg--goldfish(@click='evaluate()') =
     .base-calculator__button.bg--goldfish.br--br(@click='operate("+")') +
@@ -33,12 +33,12 @@ export default {
     }
   },
   methods: {
-    display(value) {
+    recordValue(value) {
       this.displayValue = `${this.displayValue}${value}`
     },
     decimal() {
       if (this.displayValue.indexOf('.') === -1) {
-        this.display('.')
+        this.recordValue('.')
       }
     },
     lastValue() {
@@ -47,11 +47,11 @@ export default {
     },
     operate(operator) {
       this.inputValues.push(this.lastValue(), operator)
-      this.display(operator)
+      this.recordValue(operator)
     },
     evaluate() {
       this.inputValues.push(this.lastValue())
-      const total = eval(this.inputValues.join(' '))
+      const total = Function('"use strict";return (' + this.inputValues.join(' ') + ')')()
       this.displayValue = total ? total.toString() : this.errorMessage
     }
   }
