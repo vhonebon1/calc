@@ -49,10 +49,27 @@ export default {
       this.inputValues.push(this.lastValue(), operator)
       this.recordValue(operator)
     },
+    isValidEq() {
+      const hasNumerals = this.inputValues.filter(value => !isNaN(parseFloat(value))).length
+      const hasSingleNumeral = !isNaN(parseFloat(this.displayValue))
+      return hasNumerals || hasSingleNumeral
+    },
     evaluate() {
-      this.inputValues.push(this.lastValue())
-      const total = Function('"use strict";return (' + this.inputValues.join(' ') + ')')()
-      this.displayValue = total ? total.toString() : this.errorMessage
+      if (this.isValidEq()) {
+        this.inputValues.push(this.lastValue())
+        const total = Function('"use strict";return (' + this.inputValues.join(' ') + ')')()
+        if (total) {
+          this.displayValue = total.toString()
+          this.inputValues = []
+        } else {
+          this.displayError()
+        }
+      } else {
+        this.displayError()
+      }
+    },
+    displayError() {
+      this.displayValue = this.errorMessage
     }
   }
 }
