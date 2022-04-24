@@ -1,6 +1,7 @@
 <template lang='pug'>
   .the-calculator.text--ice
     .the-calculator__screen.bg--charcoal {{displayValue || 0}}
+      .the-calculator__screen--clear.bg--ice.text--charcoal(@click='clear()') C
     .the-calculator__button.bg--stone(
       v-for='value in [7, 8, 9]' 
       @click='recordValue(value)'
@@ -70,6 +71,10 @@ export default {
     },
     displayError() {
       this.displayValue = this.errorMessage
+    },
+    clear() {
+      this.displayValue = ''
+      this.inputValues = []
     }
   }
 }
@@ -87,6 +92,7 @@ export default {
   font-size: 1.5em
 
   &__screen
+    position: relative
     grid-column: 1 / 5
     padding: 40px 8px
     border: 1px solid _COLOURS.charcoal
@@ -94,6 +100,17 @@ export default {
     text-align: right
     font-size: 2em
     border-radius: var(--radius) var(--radius) 0 0
+
+    &--clear
+      --size: 26px
+      height: var(--size)
+      width: var(--size)
+      position: absolute
+      bottom: 5px
+      border-radius: 50%
+      font-size: 0.5em
+      text-align: center
+      cursor: pointer
 
   &__button
     padding: 40px 0
