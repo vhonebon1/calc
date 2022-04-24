@@ -24,3 +24,4 @@ I gave myself 90 mins to deliver an MVP of the calculator from the wireframe sup
 - Add a testing framework and a unit test for the TheCalculator component
 - Fix edge-case bugs, e.g. if a user enters '6//' and then presses equals the output is not correct
 - Nicer styling & a better place for the Clear button. Perhaps by adding another row to the calc and stretching out key buttons
+- Add breakpoint vartiables and implement mobile styling
