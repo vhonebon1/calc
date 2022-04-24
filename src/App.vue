@@ -1,15 +1,15 @@
 <template lang='pug'>
   #app
-    base-calculator
+    the-calculator
 </template>
 
 <script>
-import BaseCalculator from './components/BaseCalculator.vue'
+import TheCalculator from './components/TheCalculator.vue'
 
 export default {
   name: 'App',
   components: {
-    BaseCalculator
+    TheCalculator
   }
 }
 </script>

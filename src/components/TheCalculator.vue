@@ -1,30 +1,30 @@
 <template lang='pug'>
-  .base-calculator.text--ice
-    .base-calculator__screen.bg--charcoal {{displayValue || 0}}
-    .base-calculator__button.bg--stone(
+  .the-calculator.text--ice
+    .the-calculator__screen.bg--charcoal {{displayValue || 0}}
+    .the-calculator__button.bg--stone(
       v-for='value in [7, 8, 9]' 
       @click='recordValue(value)'
     ) {{value}}
-    .base-calculator__button.bg--goldfish(@click='operate("/")') /
-    .base-calculator__button.bg--stone(
+    .the-calculator__button.bg--goldfish(@click='operate("/")') /
+    .the-calculator__button.bg--stone(
       v-for='value in [4, 5, 6]' 
       @click='recordValue(value)'
     ) {{value}}
-    .base-calculator__button.bg--goldfish(@click='operate("*")') x
-    .base-calculator__button.bg--stone(
+    .the-calculator__button.bg--goldfish(@click='operate("*")') x
+    .the-calculator__button.bg--stone(
       v-for='value in [1, 2, 3]' 
       @click='recordValue(value)'
     ) {{value}}
-    .base-calculator__button.bg--goldfish(@click='operate("-")') -
-    .base-calculator__button.bg--stone.br--bl(@click='recordValue(0)') 0
-    .base-calculator__button.bg--goldfish(@click='decimal()') .
-    .base-calculator__button.bg--goldfish(@click='evaluate()') =
-    .base-calculator__button.bg--goldfish.br--br(@click='operate("+")') +
+    .the-calculator__button.bg--goldfish(@click='operate("-")') -
+    .the-calculator__button.bg--stone.br--bl(@click='recordValue(0)') 0
+    .the-calculator__button.bg--goldfish(@click='decimal()') .
+    .the-calculator__button.bg--goldfish(@click='evaluate()') =
+    .the-calculator__button.bg--goldfish.br--br(@click='operate("+")') +
 </template>
 
 <script>
 export default {
-  name: 'BaseCalculator',
+  name: 'TheCalculator',
   data() {
     return {
       inputValues: [],
@@ -78,7 +78,7 @@ export default {
 <style lang='stylus' scoped>
 @require '~/src/assets/styles'
 
-.base-calculator
+.the-calculator
   --radius: 15px
   width: 400px
   display: grid
